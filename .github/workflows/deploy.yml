@@ -9,15 +9,21 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repo into booking-runner/src
         uses: actions/checkout@v4
+        with:
+          path: /home/thoernve/booking-runner/src
 
       - name: Stop old containers
         run: |
-          cd ~/booking-runner/src
+          cd /home/thoernve/booking-runner/src
           docker-compose down || true
 
       - name: Build and start containers
         run: |
-          cd ~/booking-runner/src
+          cd /home/thoernve/booking-runner/src
           docker-compose up -d --build
+
+      - name: Cleanup old images
+        run: |
+          docker image prune -af
