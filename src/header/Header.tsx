@@ -22,12 +22,12 @@ export default function Header() {
     <Navbar
       expanded={expanded}
       expand="md"
-      className="bg-primary"
+      className=""
       data-bs-theme="dark"
       fixed="top"
     >
       <Container fluid>
-        <Navbar.Brand className="me-5" as={Link} to="/">
+        <Navbar.Brand className="me-5 text-primary" as={Link} to="/">
           The Good Grocery
         </Navbar.Brand>
         <Navbar.Toggle onClick={() => setExpanded(!expanded)} />
@@ -37,7 +37,7 @@ export default function Header() {
               ({ menuLabel, path }, i) =>
                 <Nav.Link
                   as={Link} key={i} to={path}
-                  className={isActive(path) ? 'active' : ''}
+                  className={`nav-link-underline text-muted ${isActive(path) ? "active" : ""}`}
                   /* close menu after selection*/
                   onClick={() => setTimeout(() => setExpanded(false), 200)}
                 >{menuLabel}</Nav.Link>
