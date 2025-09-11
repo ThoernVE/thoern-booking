@@ -11,6 +11,12 @@ public static class FileServer
             Globals.frontendPath
         );
 
+        if (!Directory.Exists(FPath))
+        {
+            Console.WriteLine($"[WARN] FileServer disabled. Path not found: {FPath}");
+            return;
+        }
+
         HandleStatusCodes();
         ServeFiles();
         ServeFileLists();
