@@ -5,10 +5,10 @@ Globals = Obj(new
     detailedAclDebug = false,
     aclOn = true,
     isSpa = true,
-    port = args[0],
+    port = args.Length > 0 ? args[0] : "5000",
     serverName = "Minimal API Backend",
-    frontendPath = args[1],
-    dbPath = args[2],
+    frontendPath = args.Length > 1 ? args[1] : "/app/wwwroot",
+    dbPath = args.Length > 2 ? args[2] : "/app/_db.sqlite3",
     sessionLifeTimeHours = 2
 });
 
