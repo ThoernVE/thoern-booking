@@ -1,0 +1,18 @@
+# Stage 1: Build React app
+FROM node:20-alpine AS build
+WORKDIR /app
+
+# Copy package files and install deps
+COPY package*.json ./
+RUN npm install
+
+#Copy the rest of the frontend code
+COPY . .
+
+# Build static production files
+RUN npm run build
+
+#Stage 2: Serve with Nginx
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 80

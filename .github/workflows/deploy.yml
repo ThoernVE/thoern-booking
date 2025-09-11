@@ -1,0 +1,23 @@
+name: Deploy Booking Project
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Stop old containers
+        run: |
+          cd ~/booking-runner/src
+          docker-compose down || true
+
+      - name: Build and start containers
+        run: |
+          cd ~/booking-runner/src
+          docker-compose up -d --build
