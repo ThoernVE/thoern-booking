@@ -21,4 +21,4 @@ RUN dotnet publish -c Release -o /app/publish
 FROM base as FINAL
 WORKDIR /app
 COPY --from=build /app/publish/ .
-ENTRYPOINT ["dotnet", "Backend.csproj"]
+ENTRYPOINT ["dotnet", "Backend.dll"]
