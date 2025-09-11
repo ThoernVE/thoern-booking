@@ -12,7 +12,7 @@ COPY *.csproj ./
 RUN dotnet restore
 
 # Copy rest of backend source
-COPY Backend/. .
+COPY . .
 
 # Publishj optimized app
 RUN dotnet publish -c Release -o /app/publish
