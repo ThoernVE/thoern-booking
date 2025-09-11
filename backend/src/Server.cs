@@ -14,7 +14,7 @@ public static class Server
         RestApi.Start();
         Session.Start();
         // Start the server on port 3001
-        var runUrl = "http://localhost:" + Globals.port;
+        var runUrl = "http://0.0.0.0:" + Globals.port;
         Log("Server running on:", runUrl);
         Log("With these settings:", Globals);
         App.Run(runUrl);
