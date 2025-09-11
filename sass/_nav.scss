@@ -1,0 +1,6 @@
+// nav.scss
+@use "mixins" as *;
+
+.nav-link-underline {
+  @include underline-hover($accent);
+}

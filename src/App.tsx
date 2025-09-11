@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
-import Header from "./partials/Header";
-import Main from './partials/Main';
-import Footer from './partials/Footer';
+import Header from "./header/Header";
+import Main from './main/Main';
+import Footer from './footer/Footer';
 import BootstrapBreakpoints from './parts/BootstrapBreakpoints';
 
 // turn off when not needed for debugging

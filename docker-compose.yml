@@ -17,6 +17,6 @@ services:
     container_name: thoern-booking-backend
     restart: always
     ports:
-      - "5101:5000" # backend exposed on Pi:5001
+      - "5101:5000" # backend exposed on Pi:5101
     volumes:
       - ~/booking-runner/data/_db.sqlite3:/app/_db.sqlite3

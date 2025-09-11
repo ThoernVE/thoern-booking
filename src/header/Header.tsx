@@ -22,13 +22,13 @@ export default function Header() {
     <Navbar
       expanded={expanded}
       expand="md"
-      className="bg-primary"
+      className="bg-white"
       data-bs-theme="dark"
       fixed="top"
     >
       <Container fluid>
-        <Navbar.Brand className="me-5" as={Link} to="/">
-          The Good Grocery
+        <Navbar.Brand className="me-5 text-primary" as={Link} to="/">
+          <span className="fw-bold">Booking</span><span className="fs-6 text-sm"> by thoernve</span>
         </Navbar.Brand>
         <Navbar.Toggle onClick={() => setExpanded(!expanded)} />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -37,7 +37,7 @@ export default function Header() {
               ({ menuLabel, path }, i) =>
                 <Nav.Link
                   as={Link} key={i} to={path}
-                  className={isActive(path) ? 'active' : ''}
+                  className={`text-custom-muted bg-white ${isActive(path) ? "active text-accent" : ""}`}
                   /* close menu after selection*/
                   onClick={() => setTimeout(() => setExpanded(false), 200)}
                 >{menuLabel}</Nav.Link>
