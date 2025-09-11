@@ -1,5 +1,4 @@
 import { Row, Col } from "react-bootstrap";
-import { ThemeTest } from "../Themetest";
 
 LandingPage.route = {
   path: '/',
