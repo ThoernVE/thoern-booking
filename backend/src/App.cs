@@ -12,4 +12,14 @@ Globals = Obj(new
     sessionLifeTimeHours = 2
 });
 
+// Copy database from template if missing
+var dbPath = Globals.dbPath;
+var dbTemplatePath = Path.Combine(Directory.GetCurrentDirectory(), "db_template", "_db.sqlite3");
+
+if (!File.Exists(dbPath))
+{
+    Console.WriteLine($"[INFO] Creating database from template: {dbTemplatePath} -> {dbPath}");
+    File.Copy(dbTemplatePath, dbPath);
+}
+
 Server.Start();
