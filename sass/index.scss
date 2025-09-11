@@ -19,7 +19,7 @@ $secondary: hsl(210, 5%, 96%);       // --secondary
 $secondary-contrast: hsl(210, 11%, 15%); // --secondary-foreground
 
 // Muted
-$muted: hsl(210, 8%, 95%);           // --muted
+$custom-muted: hsl(180, 0%, 51%);           // --muted
 $muted-contrast: hsl(210, 8%, 45%);  // --muted-foreground
 
 // Accent
@@ -67,7 +67,7 @@ $sidebar-ring: hsl(217.2, 91.2%, 59.8%);
 $theme-colors: (
   "primary": $primary,
   "secondary": $secondary,
-  "muted": $muted,
+  "custom-muted": $custom-muted,
   "accent": $accent,
   "accent-secondary": $accent-secondary,
   "accent-tertiary": $accent-tertiary,
@@ -101,6 +101,7 @@ $theme-colors: (
 @use 'buttons';
 @use 'images';
 @use 'sticky-footer';
+@use 'navbar-overrides';
 
 // Import fonts
 @import url('https://fonts.googleapis.com/css2?family=Chewy&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');

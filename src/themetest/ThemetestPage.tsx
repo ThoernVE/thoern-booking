@@ -5,7 +5,6 @@ LandingPage.route = {
   path: '/Themetest',
   menuLabel: 'Themetest',
   index: 2,
-  parent: '/',
 };
 
 export default function LandingPage() {
