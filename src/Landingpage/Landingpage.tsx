@@ -30,7 +30,7 @@ export default function LandingPage() {
                 Sign Up
               </a>
             </div>
-            <div className="d-flex flex-column justify-content-center align-items-center flex-fill p-5 border bg-surface-tinted shadow-sm">
+            <div className="d-flex flex-column justify-content-center align-items-center flex-fill p-5 border bg-surface-accent shadow-sm">
               <h3 className="mb-3">Looking to hire</h3>
               <a href="/login" className="btn btn-accent btn-lg mt-3">
                 Browse Freelancers
