@@ -27,7 +27,7 @@ export default function LandingPage() {
             <div className="d-flex flex-column justify-content-center align-items-center flex-fill p-5 border bg-surface-accent shadow-sm">
               <h3 className="mb-3">Looking for work</h3>
               <a href="/login" className="btn btn-accent btn-lg mt-3">
-                Sign Up
+                Log In
               </a>
             </div>
             <div className="d-flex flex-column justify-content-center align-items-center flex-fill p-5 border bg-surface-accent shadow-sm">
