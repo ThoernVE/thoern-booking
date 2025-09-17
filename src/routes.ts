@@ -6,12 +6,14 @@ import AboutPage from './pages/AboutPage.tsx';
 import LandingPage from './Landingpage/Landingpage.tsx';
 import ThemetestPage from './themetest/ThemetestPage.tsx'
 import Loginpage from './Loginpage/Loginpage.tsx';
+import Registerpage from './Register/Registerpage.tsx';
 
 export default [
   AboutPage,
   LandingPage,
   ThemetestPage,
-  Loginpage
+  Loginpage,
+  Registerpage
 ]
   // map the route property of each page component to a Route
   .map(x => (({ element: createElement(x), ...x.route }) as Route))
