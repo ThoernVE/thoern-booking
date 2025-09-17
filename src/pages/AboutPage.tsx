@@ -3,7 +3,7 @@ import { Row, Col } from 'react-bootstrap';
 AboutPage.route = {
   path: '/about-us',
   menuLabel: 'About us',
-  index: 2
+  index: 3
 };
 
 export default function AboutPage() {
