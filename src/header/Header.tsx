@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import routes from '../routes';
+import { useAuth } from "../context/AuthProvider";
 
 export default function Header() {
+  const { user } = useAuth();
 
   // whether the navbar is expanded or not
   // (we use this to close it after a click/selection)
@@ -17,6 +19,17 @@ export default function Header() {
   // function that returns true if a menu item is 'active'
   const isActive = (path: string) =>
     path === currentRoute?.path || path === currentRoute?.parent;
+
+  const visibleRoutes = routes.filter((r) => {
+    if (!r.menuLabel) return false;
+
+    if (r.hiddenWhen === "loggedIn" && user) return false;
+    if (r.hiddenWhen === "loggedOut" && !user) return false;
+
+    if (r.roles && user && user.role !== "admin" && !r.roles.includes(user.role)) return false;
+
+    return true;
+  })
 
   return <header>
     <Navbar
@@ -33,7 +46,7 @@ export default function Header() {
         <Navbar.Toggle onClick={() => setExpanded(!expanded)} />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {routes.filter(x => x.menuLabel).map(
+            {visibleRoutes.filter(x => x.menuLabel).map(
               ({ menuLabel, path }, i) =>
                 <Nav.Link
                   as={Link} key={i} to={path}

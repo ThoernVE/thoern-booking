@@ -7,7 +7,8 @@ import { useAuth } from "../context/AuthProvider";
 Loginpage.route = {
     path: '/login',
     menuLabel: 'Login',
-    index: 2
+    index: 2,
+    hiddenWhen: "loggedIn",
 };
 
 export default function Loginpage() {

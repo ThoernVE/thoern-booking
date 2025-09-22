@@ -10,4 +10,5 @@ export default interface Route {
   parent?: string;
   protected?: boolean;
   roles?: Array<User["role"]>;
+  hiddenWhen?: "loggedIn" | "loggedOut";
 }

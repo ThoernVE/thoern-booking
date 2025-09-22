@@ -7,7 +7,8 @@ Dashboard.route = {
     menuLabel: 'Dashboard',
     index: 3,
     protected: true,
-    roles: ["freelancer", "user"],
+    hiddenWhen: "loggedOut",
+    roles: ["freelancer", "user", "admin"]
 };
 
 
