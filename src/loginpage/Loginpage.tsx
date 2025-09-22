@@ -1,6 +1,4 @@
-import { Button } from "react-bootstrap";
-import { Form } from "react-bootstrap";
-import { Row, Col, Container } from "react-bootstrap";
+import { Button, Form, Alert, Row, Col, Container } from "react-bootstrap";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
@@ -43,9 +41,14 @@ export default function Loginpage() {
                 <Row>
                     <Col className="section-full d-flex flex-column justify-content-center align-items-center p-5 border bg-surface-accent shadow-sm">
                         {error && (
-                            <div className="w-100">
-                                <div className="alert alert-danger">{error}</div>
-                            </div>
+                            <Alert
+                                variant="danger"
+                                onClose={() => setError(null)}
+                                dismissible
+                                className="w-100"
+                            >
+                                {error}
+                            </Alert>
                         )}
                         <h1 className="mb-5 fw-bold">Log In</h1>
                         <Form onSubmit={handleSubmit}>
