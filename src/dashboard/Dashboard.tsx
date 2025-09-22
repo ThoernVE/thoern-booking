@@ -1,15 +1,16 @@
 import { Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthProvider';
+import type User from '../interfaces/User';
+import type Route from '../interfaces/Route';
 
 Dashboard.route = {
     path: '/dashboard',
     menuLabel: 'Dashboard',
     index: 3,
-    protected: true,
     hiddenWhen: "loggedOut",
-    roles: ["freelancer", "user", "admin"]
-};
+    roles: ["freelancer", "user", "admin"] as User["role"][],
+}as Route;
 
 
 

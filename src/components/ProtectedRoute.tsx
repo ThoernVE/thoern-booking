@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthProvider";
 
 
 interface ProtectedRouteProps {
-    children: ReactNode;
+    children?: ReactNode;
     roles?: Array<"freelancer" | "user" | "admin">;
     hiddenWhen?: "loggedIn" | "loggedOut";
 }
@@ -25,12 +25,12 @@ export default function ProtectedRoute({ children, roles, hiddenWhen }: Protecte
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
-    if (!user) {
-        return <Navigate to="/login" state={{ from: location }} replace />
-    }
+    if(roles && user)
+    {
 
-    if (roles && !roles.includes(user.role)) {
-        return <Navigate to="/" replace />; //notfound? Unauth? home?
+        if (roles && user && user.role !== "admin" && !roles.includes(user.role)) {
+            return <Navigate to="/notfound" replace />; //notfound? Unauth? home?
+        }
     }
 
     return <>{children}</>;

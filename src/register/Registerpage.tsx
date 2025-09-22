@@ -1,11 +1,13 @@
 import { Row, Col, Form, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import type Route from '../interfaces/Route';
 
 Registerpage.route = {
     path: '/register',
-    index: 3
-}
+    index: 3,
+    hiddenWhen: "loggedIn",
+}as Route;
 
 export default function Registerpage() {
     const navigator = useNavigate();
