@@ -2,14 +2,14 @@ import type Route from './interfaces/Route.ts';
 import { createElement } from 'react';
 
 // page components
-import AboutPage from './pages/AboutPage.tsx';
 import LandingPage from './Landingpage/Landingpage.tsx';
 import ThemetestPage from './themetest/ThemetestPage.tsx'
 import Loginpage from './Loginpage/Loginpage.tsx';
 import Registerpage from './Register/Registerpage.tsx';
+import Dashboard from './Dashboard/Dashboard.tsx';
 
 export default [
-  AboutPage,
+  Dashboard,
   LandingPage,
   ThemetestPage,
   Loginpage,

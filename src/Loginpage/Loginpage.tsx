@@ -2,6 +2,7 @@ import { Button } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { Row, Col, Container } from "react-bootstrap";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 Loginpage.route = {
@@ -11,6 +12,7 @@ Loginpage.route = {
 };
 
 export default function Loginpage() {
+    const navigator = useNavigate();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -33,6 +35,7 @@ export default function Loginpage() {
             console.log("Login successful:", data);
 
             //logic for being logged in
+            navigator("/dashboard");
         }
         catch (err) {
             console.error(err);
