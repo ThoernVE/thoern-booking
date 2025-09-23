@@ -4,34 +4,34 @@
 // Custom SCSS variables
 
 // Base
-$body-bg: hsl(0, 0%, 100%);          // --background
-$body-color: hsl(210, 11%, 15%);     // --foreground
+$body-bg: hsl(0, 0%, 100%); // --background
+$body-color: hsl(210, 11%, 15%); // --foreground
 
 // Cards & surfaces
-$card-bg: hsl(0, 0%, 100%);          // --card
-$card-color: hsl(210, 11%, 15%);     // --card-foreground
+$card-bg: hsl(0, 0%, 100%); // --card
+$card-color: hsl(210, 11%, 15%); // --card-foreground
 
 // Primary / Secondary
-$primary: hsl(210, 25%, 8%);         // --primary
+$primary: hsl(210, 25%, 8%); // --primary
 $primary-contrast: hsl(0, 0%, 100%); // --primary-foreground
 
-$secondary: hsl(210, 5%, 96%);       // --secondary
+$secondary: hsl(210, 5%, 96%); // --secondary
 $secondary-contrast: hsl(210, 11%, 15%); // --secondary-foreground
 
 // Muted
-$custom-muted: hsl(180, 0%, 51%);           // --muted
-$muted-contrast: hsl(210, 8%, 45%);  // --muted-foreground
+$custom-muted: hsl(180, 0%, 51%); // --muted
+$muted-contrast: hsl(210, 8%, 45%); // --muted-foreground
 
 // Accent
-$accent: hsl(180, 85%, 25%);         // --accent
-$accent-contrast: hsl(0, 0%, 100%);  // --accent-foreground
+$accent: hsl(180, 85%, 25%); // --accent
+$accent-contrast: hsl(0, 0%, 100%); // --accent-foreground
 
 // Status colors
-$danger: hsl(0, 84%, 60%);           // --destructive
-$danger-contrast: hsl(0, 0%, 100%);  // --destructive-foreground
+$danger: hsl(0, 84%, 60%); // --destructive
+$danger-contrast: hsl(0, 0%, 100%); // --destructive-foreground
 
 // Borders / inputs
-$border-color: hsl(210, 10%, 88%);   // --border
+$border-color: hsl(210, 10%, 88%); // --border
 $input-bg: hsl(0, 0%, 100%);
 $input-border-color: hsl(210, 10%, 88%);
 $focus-ring-color: hsl(180, 85%, 25%); // --ring
@@ -83,8 +83,7 @@ $theme-colors: (
 );
 
 // Load bootstrap with overloads
-@use "bootstrap" with (
-  $body-bg: $body-bg,
+@use "bootstrap" with ($body-bg: $body-bg,
   $body-color: $body-color,
   $primary: $primary,
   $secondary: $secondary,
@@ -92,8 +91,7 @@ $theme-colors: (
   $info: $highlight-blue,
   $success: $highlight-teal,
   $border-color: $border-color,
-  $theme-colors: $theme-colors
-);
+  $theme-colors: $theme-colors);
 
 // Load custom partials
 @use 'bootstrap-breakpoints';
@@ -104,4 +102,11 @@ $theme-colors: (
 @use 'navbar-overrides';
 
 // Import fonts
-@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+.section-full {
+  height: calc(100vh - 56px); // Full viewport height minus navbar height
+}
+
+#enterBanner {
+  scroll-margin-top: 56px;
+}

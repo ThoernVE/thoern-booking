@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
 import { useStateObject } from '../utils/useStateObject';
 
 export default function Main() {
@@ -11,8 +10,6 @@ export default function Main() {
   });
 
   return <main className="mt-5">
-    <Container className="mt-5 mb-4">
-      <Outlet context={stateAndSetter} />
-    </Container>
+    <Outlet context={stateAndSetter} />
   </main>;
 }
