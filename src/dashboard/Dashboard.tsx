@@ -4,6 +4,9 @@ import { useAuth } from '../context/AuthProvider';
 import type User from '../interfaces/User';
 import type Route from '../interfaces/Route';
 import MyBookings from './MyBookings';
+import FreelancerWorkFields from './FreelancerWorkfields';
+import FindFreelancer from './FindFreelancer';
+import AvailableTimes from './AvailableTimes';
 
 Dashboard.route = {
     path: '/dashboard',
@@ -16,8 +19,15 @@ Dashboard.route = {
 
 
 export default function Dashboard() {
-    const { logout } = useAuth();
+    const { user, loading, logout } = useAuth();
     const navigator = useNavigate();
+
+    if (loading) {
+        return (
+            <div>loading...</div>
+        )
+    }
+
 
     async function handleLogout() {
         try {
@@ -45,5 +55,26 @@ export default function Dashboard() {
                 </Col>
             </Row>
         </Container>
+
+        {user?.role === 'freelancer'
+            ? <Container>
+                <Row>
+                    <Col lg={6}>
+                        <FreelancerWorkFields />
+                    </Col>
+                    <Col lg={6}>
+                        <AvailableTimes />
+                    </Col>
+                </Row>
+            </Container>
+            :
+            <Container>
+                <Row>
+                    <Col>
+                        <FindFreelancer />
+                    </Col>
+                </Row>
+            </Container>
+        }
     </>;
 }
