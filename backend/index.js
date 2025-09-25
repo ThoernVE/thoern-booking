@@ -52,7 +52,7 @@ export default function startBackend(app) {
 
     // Proxy traffic to the backend if the request starts with /api
     initialStart && app.use('/api', (req, res, next) => {
-      proxy(`localhost:${startPort}`, {
+      proxy(`127.0.0.1:${startPort}`, {
         proxyReqPathResolver(req) {
           return '/api' + req.url;
         }
