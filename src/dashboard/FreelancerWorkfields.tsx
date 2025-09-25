@@ -1,4 +1,4 @@
-import { Row, Col, Container, Form, Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 
 export default function FreelancerWorkFields() {
 
@@ -7,21 +7,37 @@ export default function FreelancerWorkFields() {
     }
 
     return (
-        <Container>
-            <Row>
-                <Col>
+                <div>
                     <Form onSubmit={() => handleWorkFields}>
                         <Form.Group>
-                            <Form.Check type="checkbox" label="Frontend" />
-                            <Form.Check type="checkbox" label="Backend" />
-                            <Form.Check type="checkbox" label="Security" />
-                            <Form.Check type="checkbox" label="Devops" />
+                            <Form.Check
+                                type="checkbox"
+                                id="frontend"
+                                label="Frontend"
+                                className="big-check"
+                            />
+                            <Form.Check
+                                type="checkbox"
+                                id="backend"
+                                label="Backend"
+                                className="big-check"
+                            />
+                            <Form.Check
+                                type="checkbox"
+                                id="security"
+                                label="Security"
+                                className="big-check"
+                            />
+                            <Form.Check
+                                type="checkbox"
+                                id="devops"
+                                label="DevOps"
+                                className="big-check"
+                            />
                         </Form.Group>
                         <Button variant="accent" type="submit">Submit</Button>
                     </Form>
-                </Col>
-            </Row>
-        </Container>
+                </div>
     )
 
 }

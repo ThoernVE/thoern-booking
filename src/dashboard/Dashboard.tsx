@@ -1,6 +1,6 @@
-import { Row, Col, Button, Container } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthProvider';
+import { Row, Col, Container } from 'react-bootstrap';
+
+import { useAuth } from '../hooks/useAuth';
 import type User from '../interfaces/User';
 import type Route from '../interfaces/Route';
 import MyBookings from './MyBookings';
@@ -19,8 +19,8 @@ Dashboard.route = {
 
 
 export default function Dashboard() {
-    const { user, loading, logout } = useAuth();
-    const navigator = useNavigate();
+    const { user, loading } = useAuth();
+
 
     if (loading) {
         return (
@@ -29,17 +29,7 @@ export default function Dashboard() {
     }
 
 
-    async function handleLogout() {
-        try {
-            await logout();
-            console.log("User succesfully logged out");
-            navigator("/");
-        }
-        catch (err) {
-            console.error(err);
-            navigator("/");
-        }
-    }
+ 
     return <>
         <Container>
             <Row>
@@ -48,22 +38,21 @@ export default function Dashboard() {
                 </Col>
             </Row>
             <Row>
-                <Col className="section-full d-flex flex-column justify-content-center align-items-center">
+                <Col className="d-flex flex-column justify-content-center align-items-center">
                     <h2 className="text-primary">About me</h2>
                     <p>Hello! I am Viktor. Read more at <a href="https://thoernve.dev">my webpage</a></p>
-                    <Button onClick={handleLogout}>Logout</Button>
                 </Col>
             </Row>
         </Container>
 
         {user?.role === 'freelancer'
             ? <Container>
-                <Row>
-                    <Col lg={6}>
-                        <FreelancerWorkFields />
-                    </Col>
-                    <Col lg={6}>
+                <Row className="min-vh-100">
+                    <Col xxl={10} lg={9} md={8} sm={6} className="h-xs-100">
                         <AvailableTimes />
+                    </Col>
+                    <Col xxl={2} lg={3} md={4} sm={6} className="h-xs-100 d-flex justify-content-center align-items-center">
+                        <FreelancerWorkFields />
                     </Col>
                 </Row>
             </Container>
