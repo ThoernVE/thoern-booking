@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Mvc;
+
 namespace WebApp;
+
 public static class RestApi
 {
     public static void Start()
@@ -67,5 +70,12 @@ public static class RestApi
                 context
             ))
         );
+
+        App.MapPost("api/users/workfields", (HttpContext context, [FromBody] int id) =>
+        {
+            var sql = "SELECT WorkfieldID FROM COMPETENCES WHERE UserId = $id";
+            var result = DbQuery.SQLQuery(sql, new { id }, context);
+            return Results.Ok(result);
+        });
     }
 }
