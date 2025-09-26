@@ -72,7 +72,7 @@ export default function Header() {
           {user  
             ?<Nav>
               <Nav.Link
-              onClick={() => {handleLogout()}} className='text-accent fw-bold'>Log Out</Nav.Link>
+              onClick={handleLogout} className='text-accent fw-bold'>Log Out</Nav.Link>
             </Nav>
             : <Nav>
               <Nav.Link

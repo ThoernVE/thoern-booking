@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import type User from "../interfaces/User";
 import { AuthContext } from "./AuthContext";
 import type { AuthContextType } from "./AuthContext";
+import { useNavigate } from "react-router-dom";
 
 interface AuthProviderProps {
     children: ReactNode;
@@ -11,6 +12,7 @@ interface AuthProviderProps {
 const AuthProvider = ({ children }: AuthProviderProps) => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
+    const navigator = useNavigate();
 
     useEffect(() => {
         refreshUser().finally(() => setLoading(false));
@@ -38,6 +40,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
             credentials: "include",
         });
         setUser(null);
+        navigator("/");
     };
 
     const refreshUser = async () => {
