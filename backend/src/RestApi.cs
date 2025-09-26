@@ -73,9 +73,11 @@ public static class RestApi
 
         App.MapPost("api/users/workfields", (HttpContext context, [FromBody] int id) =>
         {
-            var sql = "SELECT WorkfieldID FROM COMPETENCES WHERE UserId = $id";
-            var result = DbQuery.SQLQuery(sql, new { id }, context);
-            return Results.Ok(result);
+            var sql = "SELECT workfieldId AS id FROM COMPETENCES WHERE userId = $id";
+            var rows = DbQuery.SQLQuery(sql, new { id }, context);
+
+            var ids = rows.Map(x => (int)x.id);
+            return Results.Ok(ids);
         });
     }
 }
