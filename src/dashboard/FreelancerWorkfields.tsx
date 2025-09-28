@@ -7,11 +7,16 @@ type Workfield = {
     workfield: string;
 }
 
+type Props = {
+    onSaved: () => void;
+}
 
-export default function FreelancerWorkFields() {
+
+export default function FreelancerWorkFields({ onSaved }: Props) {
     const [workfields, setWorkfields] = useState<Workfield[]>([]);
     const [loading, setLoading] = useState(true);
     const [selected, setSelected] = useState<number[]>([]);
+
     const { user } = useAuth();
     const userId = user?.id;
 
@@ -54,23 +59,23 @@ export default function FreelancerWorkFields() {
     const handleSubmit = async () => {
         const payload = {
             userId: user?.id,
-            workfieldsIds: selected
+            workfieldIds: selected
         };
 
-        await fetch("api/users/workfields", {
+        await fetch("api/users/workfields/save", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
         })
 
-        console.log("Saved", payload)
+        onSaved();
     }
 
     if (loading) return <Spinner animation="border" />;
 
     return (
         <div>
-            <Form onSubmit={() => handleSubmit}>
+            <Form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
                 <Form.Group>
                     {workfields.map(wf => (
                         <Form.Check
