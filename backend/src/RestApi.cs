@@ -79,5 +79,20 @@ public static class RestApi
             var ids = rows.Map(x => (int)x.id);
             return Results.Ok(ids);
         });
+
+        App.MapPost("api/users/workfields/save", (HttpContext context, [FromBody] SaveWorkfieldsRequest req) =>
+        {
+            var deleteSql = "DELETE FROM Competences WHERE UserId = $userId";
+            DbQuery.SQLQuery(deleteSql, new { userId = req.UserId }, context);
+
+            foreach (var wfId in req.WorkfieldIds)
+            {
+                var insertSql = "INSERT INTO Competences (userId, workfieldId) VALUES ($userId, $workfieldId)";
+                DbQuery.SQLQuery(insertSql, new { userId = req.UserId, workfieldId = wfId }, context);
+            }
+
+            return Results.Ok(new { message = "Competences updated", count = req.WorkfieldIds.Count });
+        });
     }
+    public record SaveWorkfieldsRequest(int UserId, List<int> WorkfieldIds);
 }
