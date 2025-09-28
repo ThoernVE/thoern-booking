@@ -1,4 +1,4 @@
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container, Alert } from 'react-bootstrap';
 
 import { useAuth } from '../hooks/useAuth';
 import type User from '../interfaces/User';
@@ -7,6 +7,7 @@ import MyBookings from './MyBookings';
 import FreelancerWorkFields from './FreelancerWorkfields';
 import FindFreelancer from './FindFreelancer';
 import AvailableTimes from './AvailableTimes';
+import { useEffect, useState } from 'react';
 
 Dashboard.route = {
     path: '/dashboard',
@@ -20,6 +21,14 @@ Dashboard.route = {
 
 export default function Dashboard() {
     const { user, loading } = useAuth();
+    const [saved, setSaved] = useState(false);
+
+    useEffect(() => {
+        if (saved) {
+            const timer = setTimeout(() => setSaved(false), 3000)
+            return () => clearTimeout(timer);
+        }
+    });
 
 
     if (loading) {
@@ -29,8 +38,25 @@ export default function Dashboard() {
     }
 
 
- 
+
     return <>
+        {saved && (
+            <Alert
+                variant="success"
+                style={{
+                    position: "fixed",
+                    top: "20px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    zIndex: 1050,
+                    width: "auto",
+                    minWidth: "300px",
+                    textAlign: "center"
+                }}
+            >
+                Workfields saved!
+            </Alert>
+        )}
         <Container>
             <Row>
                 <Col className="pt-5 d-flex flex-column justify-content-center align-items-center justify-content-center align-items-center">
@@ -52,7 +78,7 @@ export default function Dashboard() {
                         <AvailableTimes />
                     </Col>
                     <Col xxl={2} lg={3} md={4} sm={6} className="h-xs-100 d-flex justify-content-center align-items-center">
-                        <FreelancerWorkFields />
+                        <FreelancerWorkFields onSaved={() => setSaved(true)} />
                     </Col>
                 </Row>
             </Container>
