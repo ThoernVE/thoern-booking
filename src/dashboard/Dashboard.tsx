@@ -73,11 +73,11 @@ export default function Dashboard() {
 
         {user?.role === 'freelancer'
             ? <Container>
-                <Row className="min-vh-100">
-                    <Col xxl={10} lg={9} md={8} sm={6} className="h-xs-100">
+                <Row className="min-vh-100 shadow rounded-3 border">
+                    <Col md={8} sm={6} className="h-xs-100  ">
                         <AvailableTimes />
                     </Col>
-                    <Col xxl={2} lg={3} md={4} sm={6} className="h-xs-100 d-flex justify-content-center align-items-center">
+                    <Col md={4} sm={6} className="h-xs-100 d-flex justify-content-center align-items-center  ">
                         <FreelancerWorkFields onSaved={() => setSaved(true)} />
                     </Col>
                 </Row>
