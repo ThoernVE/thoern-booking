@@ -1,12 +1,11 @@
 import { Button, Form, Alert, Row, Col, Container } from "react-bootstrap";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../hooks/useAuth";
 
 
 Loginpage.route = {
     path: '/login',
-    menuLabel: 'Login',
     index: 2,
     hiddenWhen: "loggedIn",
 };

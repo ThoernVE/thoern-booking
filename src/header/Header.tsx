@@ -1,15 +1,28 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import routes from '../routes';
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Header() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const navigator = useNavigate();
 
   // whether the navbar is expanded or not
   // (we use this to close it after a click/selection)
   const [expanded, setExpanded] = useState(false);
+
+  async function handleLogout() {
+        try {
+            await logout();
+            console.log("User succesfully logged out");
+            navigator("/");
+        }
+        catch (err) {
+            console.error(err);
+            navigator("/");
+        }
+    }
 
   //  get the current route
   const pathName = useLocation().pathname;
@@ -56,6 +69,16 @@ export default function Header() {
                 >{menuLabel}</Nav.Link>
             )}
           </Nav>
+          {user  
+            ?<Nav>
+              <Nav.Link
+              onClick={handleLogout} className='text-accent fw-bold'>Log Out</Nav.Link>
+            </Nav>
+            : <Nav>
+              <Nav.Link
+              href="login" className='text-accent fw-bold'>Log In</Nav.Link>
+            </Nav>
+          }
         </Navbar.Collapse>
       </Container>
     </Navbar>

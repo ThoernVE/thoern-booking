@@ -1,16 +1,9 @@
-import { useContext, createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import type User from "../interfaces/User";
-
-interface AuthContextType {
-    user: User | null;
-    loading: boolean;
-    login: (email: string, password: string) => Promise<void>;
-    logout: () => Promise<void>;
-    refreshUser: () => Promise<void>;
-}
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+import { AuthContext } from "./AuthContext";
+import type { AuthContextType } from "./AuthContext";
+import { useNavigate } from "react-router-dom";
 
 interface AuthProviderProps {
     children: ReactNode;
@@ -19,6 +12,7 @@ interface AuthProviderProps {
 const AuthProvider = ({ children }: AuthProviderProps) => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
+    const navigator = useNavigate();
 
     useEffect(() => {
         refreshUser().finally(() => setLoading(false));
@@ -46,6 +40,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
             credentials: "include",
         });
         setUser(null);
+        navigator("/");
     };
 
     const refreshUser = async () => {
@@ -74,11 +69,3 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 }
 
 export default AuthProvider;
-
-export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (context === undefined) {
-        throw new Error("useAuth must be used within an AuthProvider");
-    };
-    return context;
-}

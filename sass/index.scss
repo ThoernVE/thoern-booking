@@ -107,6 +107,46 @@ $theme-colors: (
   height: calc(100vh - 56px); // Full viewport height minus navbar height
 }
 
+.padding-header {
+  padding-top: 56px;
+}
+
+.big-check {
+  font-size: 1.5rem;
+  /* bigger text */
+  padding: 1rem 2rem;
+  /* bigger hitbox */
+}
+
+.big-check input {
+  transform: scale(1.5);
+  /* make the actual checkbox larger */
+  margin-right: 1rem;
+  /* add space between box and label */
+}
+
+.big-check input[type="checkbox"]:checked {
+  background-color: hsl(180, 85%, 25%);
+  border-color: hsl(180, 85%, 25%);
+}
+
+
+@media (min-width: 768px) {
+  .big-check {
+    font-size: 2rem;
+    /* big text */
+    padding: 2rem 2rem;
+    /* big hitbox */
+  }
+
+  .big-check input {
+    transform: scale(1.5);
+    /* make the actual checkbox larger */
+    margin-right: 2rem;
+    /* add space between box and label */
+  }
+}
+
 #enterBanner {
   scroll-margin-top: 56px;
 }
