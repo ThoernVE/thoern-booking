@@ -144,7 +144,7 @@ export default function AvailableTimes() {
                                 </p>
                                 <div className="d-flex gap-2">
                                     <button
-                                        className="btn btn-primary btn-sm w-50"
+                                        className="btn btn-accent btn-sm w-50"
                                         onClick={() => handleOpenEdit(slot)}
                                     >
                                         Edit
