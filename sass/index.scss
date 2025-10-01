@@ -113,16 +113,12 @@ $theme-colors: (
 
 .big-check {
   font-size: 1.5rem;
-  /* bigger text */
   padding: 1rem 2rem;
-  /* bigger hitbox */
 }
 
 .big-check input {
   transform: scale(1.5);
-  /* make the actual checkbox larger */
   margin-right: 1rem;
-  /* add space between box and label */
 }
 
 .big-check input[type="checkbox"]:checked {
@@ -134,18 +130,29 @@ $theme-colors: (
 @media (min-width: 768px) {
   .big-check {
     font-size: 2rem;
-    /* big text */
     padding: 2rem 2rem;
-    /* big hitbox */
   }
 
   .big-check input {
     transform: scale(1.5);
-    /* make the actual checkbox larger */
     margin-right: 2rem;
-    /* add space between box and label */
+  }
+
+  .card {
+    min-height: 215px;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-body .btn {
+    margin-top: auto;
+    /* pushes the button to the bottom */
   }
 }
+
 
 #enterBanner {
   scroll-margin-top: 56px;

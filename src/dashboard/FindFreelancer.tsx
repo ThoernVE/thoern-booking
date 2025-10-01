@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
 interface Availability {
-    user_id: number;
-    freelancer_name: string;
-    available_time_id: number;
-    from_time: string;
-    to_time: string;
-    workfield: string;
+    userId: number;
+    freelancerName: string;
+    availableTimeId: number;
+    availableFrom: string;
+    availableTo: string;
+    workfield: string[];
 }
 
 export default function FindFreelancer() {
@@ -20,7 +20,13 @@ export default function FindFreelancer() {
         fetch("/api/freelancerAvailability")
             .then(res => res.json())
             .then(data => {
-                setAvailabilities(data);
+                const normalizedData = data.map((slot: any) => ({
+                    ...slot,
+                    workfield: slot.workfield
+                        ? slot.workfield.split(",").map((w: string) => w.trim())
+                        : []
+                }));
+                setAvailabilities(normalizedData);
                 setLoading(false);
             })
             .catch(err => {
@@ -31,11 +37,11 @@ export default function FindFreelancer() {
 
     if (loading) return <div>Loading...</div>;
 
-    const workfields = ["All", ...Array.from(new Set(availabilities.map(a => a.workfield)))];
+    const workfields = ["All", ...Array.from(new Set(availabilities.flatMap(a => a.workfield)))];
 
     const filteredAvailabilities = availabilities.filter((slot) => {
-        const matchesSearch = slot.freelancer_name.toLowerCase().includes(search.toLowerCase());
-        const matchesWorkfield = selectedWorkfield === "All" || slot.workfield === selectedWorkfield;
+        const matchesSearch = slot.freelancerName.toLowerCase().includes(search.toLowerCase());
+        const matchesWorkfield = selectedWorkfield === "All" || slot.workfield.includes(selectedWorkfield);
         return matchesSearch && matchesWorkfield;
     });
 
@@ -73,15 +79,15 @@ export default function FindFreelancer() {
                 <h2>Available Times</h2>
                 <div className="row">
                     {filteredAvailabilities.map((slot) => (
-                        <div className="col-md-4 mb-3" key={slot.available_time_id + "-" + slot.workfield}>
+                        <div className="col-md-4 mb-3" key={slot.availableTimeId + "-" + slot.workfield}>
                             <div className="card shadow-sm">
                                 <div className="card-body">
-                                    <h5 className="card-title">{slot.freelancer_name}</h5>
-                                    <h6 className="card-subtitle mb-2 text-muted">{slot.workfield}</h6>
+                                    <h5 className="card-title">{slot.freelancerName}</h5>
+                                    <h6 className="card-subtitle mb-2 text-muted">{slot.workfield.join(", ")}</h6>
                                     <p className="card-text">
                                         <strong>From:</strong>{" "}
-                                        {new Date(slot.from_time).toLocaleString()} <br />
-                                        <strong>To:</strong> {new Date(slot.to_time).toLocaleString()}
+                                        {new Date(slot.availableFrom).toLocaleString()} <br />
+                                        <strong>To:</strong> {new Date(slot.availableTo).toLocaleString()}
                                     </p>
                                     <button className="btn btn-primary btn-sm">Book</button>
                                 </div>
