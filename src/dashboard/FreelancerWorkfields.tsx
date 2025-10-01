@@ -74,9 +74,9 @@ export default function FreelancerWorkFields({ onSaved }: Props) {
     if (loading) return <Spinner animation="border" />;
 
     return (
-        <div className="">
+        <div className="mt-4">
             <h2>My Workfields</h2>
-            <Form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+            <Form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="d-flex justify-content-center align-items-center flex-column">
                 <Form.Group>
                     {workfields.map(wf => (
                         <Form.Check

@@ -101,8 +101,6 @@ $theme-colors: (
 @use 'sticky-footer';
 @use 'navbar-overrides';
 
-// Import fonts
-
 .section-full {
   height: calc(100vh - 56px); // Full viewport height minus navbar height
 }
@@ -125,7 +123,6 @@ $theme-colors: (
   background-color: hsl(180, 85%, 25%);
   border-color: hsl(180, 85%, 25%);
 }
-
 
 @media (min-width: 768px) {
   .big-check {
