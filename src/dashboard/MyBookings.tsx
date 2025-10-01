@@ -7,7 +7,6 @@ type BookingInfo = {
     freelancerName: string;
     bookedFrom: string;
     bookedTo: string;
-    subject: string;
 };
 
 export default function BookingList() {
@@ -48,12 +47,16 @@ export default function BookingList() {
         };
 
         fetchBookings();
+
+        const handler = () => fetchBookings();
+        window.addEventListener("bookingChanged", handler);
+        return () => window.removeEventListener("bookingChanged", handler);
     }, [userId, role]);
 
     if (loading) return <p>Loading bookings...</p>;
 
     return (
-        <div className="container mt-4">
+        <div className="container my-4 ">
             <h2>Bookings</h2>
             <div className="d-none d-md-block">
                 <table className="table table-striped">
@@ -61,7 +64,6 @@ export default function BookingList() {
                         <tr>
                             <th>Customer</th>
                             <th>Freelancer</th>
-                            <th>Subject</th>
                             <th>From</th>
                             <th>To</th>
                         </tr>
@@ -72,7 +74,6 @@ export default function BookingList() {
                                 <tr key={`table-${b.id}`}>
                                     <td>{b.customerName}</td>
                                     <td>{b.freelancerName}</td>
-                                    <td>{b.subject}</td>
                                     <td>{new Date(b.bookedFrom).toLocaleString()}</td>
                                     <td>{new Date(b.bookedTo).toLocaleString()}</td>
                                 </tr>
@@ -92,7 +93,6 @@ export default function BookingList() {
                     bookings.map((b) => (
                         <div className="card mb-3 shadow-sm" key={`card-${b.id}`}>
                             <div className="card-body">
-                                <h5 className="card-title">{b.subject}</h5>
                                 <h6 className="card-subtitle mb-2 text-muted">
                                     {b.customerName} → {b.freelancerName}
                                 </h6>
