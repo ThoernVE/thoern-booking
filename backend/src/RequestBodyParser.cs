@@ -1,10 +1,11 @@
 namespace WebApp;
+
 public static class RequestBodyParser
 {
     public static dynamic ReqBodyParse(string table, Obj body)
     {
         // Always remove "role" for users table
-        var keys = body.GetKeys().Filter(key => table != "users" || key != "role");
+        var keys = body.GetKeys();//.Filter(key => table != "users" || key != "role"); //Users should be able to set themselves as freelancers
         // Clean up the body by converting strings to numbers when possible
         var cleaned = Obj();
         body.GetKeys().ForEach(key
