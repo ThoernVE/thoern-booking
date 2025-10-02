@@ -60,7 +60,6 @@ export default function Header() {
                 <Nav.Link
                   as={Link} key={i} to={path}
                   className={`text-custom-muted bg-white ${isActive(path) ? "active text-accent" : ""}`}
-                  /* close menu after selection*/
                   onClick={() => setTimeout(() => setExpanded(false), 200)}
                 >{menuLabel}</Nav.Link>
             )}
