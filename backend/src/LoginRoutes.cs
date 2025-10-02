@@ -59,8 +59,14 @@ public static class LoginRoutes
         {
             var user = GetUser(context);
 
-            // Delete the user from the session
-            Session.Set(context, "user", null);
+            context.Request.Cookies.TryGetValue("session", out string cookieValue);
+            if (cookieValue != null)
+            {
+                SQLQuery("DELETE FROM sessions WHERE id = $id", new { id = cookieValue });
+
+                context.Response.Cookies.Delete("session");
+            }
+
 
             return RestResult.Parse(context, user == null ?
                 new { error = "No user is logged in." } :
