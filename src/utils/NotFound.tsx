@@ -6,7 +6,7 @@ export default function NotFound() {
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setRedirect(true), 2000); // 1.5s delay
+    const timer = setTimeout(() => setRedirect(true), 2000);
     return () => clearTimeout(timer);
   }, []);
 

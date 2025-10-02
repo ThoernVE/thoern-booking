@@ -29,7 +29,7 @@ export default function ProtectedRoute({ children, roles, hiddenWhen }: Protecte
     {
 
         if (roles && user && user.role !== "admin" && !roles.includes(user.role)) {
-            return <Navigate to="/notfound" replace />; //notfound? Unauth? home?
+            return <Navigate to="/notfound" replace />;
         }
     }
 
