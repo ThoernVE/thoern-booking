@@ -20,6 +20,7 @@ function getNowForDatetimeLocal() {
     return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
 }
 
+
 export function EditModal({ initialFrom, initialTo, onClose, onSave, isEdit }: EditModalProps) {
     const [from, setFrom] = useState(
         isEdit ? initialFrom : getNowForDatetimeLocal()
@@ -27,6 +28,28 @@ export function EditModal({ initialFrom, initialTo, onClose, onSave, isEdit }: E
     const [to, setTo] = useState(
         isEdit ? initialTo : getNowForDatetimeLocal()
     );
+    const [error, setError] = useState<string | null>(null);
+
+    function handleSave() {
+        setError(null);
+        const fromDate = new Date(from);
+        const toDate = new Date(to);
+        const now = new Date();
+
+        if (isNaN(fromDate.getTime()) || isNaN(toDate.getTime())) {
+            setError("Please enter valid date and time values.");
+            return;
+        }
+        if (fromDate <= now) {
+            setError("'From' time must be after the current time.");
+            return;
+        }
+        if (fromDate >= toDate) {
+            setError("'From' time must be before 'To' time.");
+            return;
+        }
+        onSave(from, to);
+    }
 
     return (
         <div className="modal fade show d-block" tabIndex={-1} role="dialog">
@@ -37,6 +60,11 @@ export function EditModal({ initialFrom, initialTo, onClose, onSave, isEdit }: E
                         <button type="button" className="btn-close" onClick={onClose}></button>
                     </div>
                     <div className="modal-body">
+                        {error && (
+                            <div className="alert alert-danger" role="alert">
+                                {error}
+                            </div>
+                        )}
                         <label className="form-label">From</label>
                         <input
                             type="datetime-local"
@@ -56,7 +84,7 @@ export function EditModal({ initialFrom, initialTo, onClose, onSave, isEdit }: E
                         <button className="btn btn-secondary" onClick={onClose}>
                             Cancel
                         </button>
-                        <button className="btn btn-success" onClick={() => onSave(from, to)}>
+                        <button className="btn btn-success" onClick={handleSave}>
                             {isEdit ? "Save Changes" : "Create"}
                         </button>
                     </div>
