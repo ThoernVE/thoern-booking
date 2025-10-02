@@ -22,13 +22,21 @@ Dashboard.route = {
 export default function Dashboard() {
     const { user, loading } = useAuth();
     const [saved, setSaved] = useState(false);
+    const [booked, setBooked] = useState(false);
 
     useEffect(() => {
         if (saved) {
-            const timer = setTimeout(() => setSaved(false), 3000)
+            const timer = setTimeout(() => setSaved(false), 3000);
             return () => clearTimeout(timer);
         }
-    });
+    }, [saved]);
+
+    useEffect(() => {
+        if (booked) {
+            const timer = setTimeout(() => setBooked(false), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [booked]);
 
 
     if (loading) {
@@ -57,27 +65,38 @@ export default function Dashboard() {
                 Workfields saved!
             </Alert>
         )}
+        {booked && (
+            <Alert
+                variant="success"
+                style={{
+                    position: "fixed",
+                    top: "20px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    zIndex: 1050,
+                    width: "auto",
+                    minWidth: "300px",
+                    textAlign: "center"
+                }}
+            >
+                Booking successful!
+            </Alert>
+        )}
         <Container>
             <Row>
                 <Col className="pt-5 d-flex flex-column justify-content-center align-items-center justify-content-center align-items-center">
                     <MyBookings />
                 </Col>
             </Row>
-            <Row>
-                <Col className="d-flex flex-column justify-content-center align-items-center">
-                    <h2 className="text-primary">About me</h2>
-                    <p>Hello! I am Viktor. Read more at <a href="https://thoernve.dev">my webpage</a></p>
-                </Col>
-            </Row>
         </Container>
 
         {user?.role === 'freelancer'
             ? <Container>
-                <Row className="min-vh-100 shadow rounded-3 border">
+                <Row className="p-4 shadow rounded-3 border">
                     <Col md={8} sm={6} className="h-xs-100  ">
                         <AvailableTimes />
                     </Col>
-                    <Col md={4} sm={6} className="h-xs-100 d-flex justify-content-center align-items-center  ">
+                    <Col md={4} sm={6} className="h-xs-100 ">
                         <FreelancerWorkFields onSaved={() => setSaved(true)} />
                     </Col>
                 </Row>
@@ -86,7 +105,7 @@ export default function Dashboard() {
             <Container>
                 <Row>
                     <Col>
-                        <FindFreelancer />
+                        <FindFreelancer onBooked={() => setBooked(true)} />
                     </Col>
                 </Row>
             </Container>

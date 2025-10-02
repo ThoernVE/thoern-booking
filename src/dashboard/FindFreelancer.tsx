@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 interface Availability {
-    user_id: number;
-    freelancer_name: string;
-    available_time_id: number;
-    from_time: string;
-    to_time: string;
-    workfield: string;
+    userId: number;
+    freelancerName: string;
+    availableTimeId: number;
+    availableFrom: string;
+    availableTo: string;
+    workfield: string[];
 }
 
-export default function FindFreelancer() {
+type Props = {
+    onBooked: () => void;
+};
+
+export default function FindFreelancer({ onBooked }: Props) {
     const [availabilities, setAvailabilities] = useState<Availability[]>([]);
     const [loading, setLoading] = useState(true);
+    const { user } = useAuth();
 
     const [search, setSearch] = useState("");
     const [selectedWorkfield, setSelectedWorkfield] = useState("All");
@@ -20,7 +26,13 @@ export default function FindFreelancer() {
         fetch("/api/freelancerAvailability")
             .then(res => res.json())
             .then(data => {
-                setAvailabilities(data);
+                const normalizedData = data.map((slot: any) => ({
+                    ...slot,
+                    workfield: slot.workfield
+                        ? slot.workfield.split(",").map((w: string) => w.trim())
+                        : []
+                }));
+                setAvailabilities(normalizedData);
                 setLoading(false);
             })
             .catch(err => {
@@ -31,18 +43,49 @@ export default function FindFreelancer() {
 
     if (loading) return <div>Loading...</div>;
 
-    const workfields = ["All", ...Array.from(new Set(availabilities.map(a => a.workfield)))];
+    const workfields = ["All", ...Array.from(new Set(availabilities.flatMap(a => a.workfield)))];
 
     const filteredAvailabilities = availabilities.filter((slot) => {
-        const matchesSearch = slot.freelancer_name.toLowerCase().includes(search.toLowerCase());
-        const matchesWorkfield = selectedWorkfield === "All" || slot.workfield === selectedWorkfield;
+        const matchesSearch = slot.freelancerName.toLowerCase().includes(search.toLowerCase());
+        const matchesWorkfield = selectedWorkfield === "All" || slot.workfield.includes(selectedWorkfield);
         return matchesSearch && matchesWorkfield;
     });
 
 
+    const handleBooking = async (slot: Availability) => {
+        if (!user) {
+            alert("You must be logged in to book a freelancer.")
+            return;
+        }
+
+        const payload = {
+            UserId: user.id,
+            AvailableTimeId: slot.availableTimeId
+        }
+
+        try {
+            const response = await fetch("/api/bookTime", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) throw new Error("Booking failed");
+
+            onBooked();
+
+            setAvailabilities(prev => prev.filter(a => a.availableTimeId !== slot.availableTimeId));
+
+            window.dispatchEvent(new Event("bookingChanged"));
+        } catch (err) {
+            console.error("Error booking time:", err);
+            alert("Error booking time. Please try again.");
+        }
+    }
+
     return (
         <div className="container mt-4">
-            <h2>Freelancer Availability</h2>
+            <h2>Find Available Freelancers:</h2>
 
             <div className="row mb-3">
                 <div className="col-md-6">
@@ -72,22 +115,41 @@ export default function FindFreelancer() {
             <div className="container mt-4">
                 <h2>Available Times</h2>
                 <div className="row">
-                    {filteredAvailabilities.map((slot) => (
-                        <div className="col-md-4 mb-3" key={slot.available_time_id + "-" + slot.workfield}>
-                            <div className="card shadow-sm">
-                                <div className="card-body">
-                                    <h5 className="card-title">{slot.freelancer_name}</h5>
-                                    <h6 className="card-subtitle mb-2 text-muted">{slot.workfield}</h6>
-                                    <p className="card-text">
-                                        <strong>From:</strong>{" "}
-                                        {new Date(slot.from_time).toLocaleString()} <br />
-                                        <strong>To:</strong> {new Date(slot.to_time).toLocaleString()}
-                                    </p>
-                                    <button className="btn btn-primary btn-sm">Book</button>
+                    {filteredAvailabilities.length === 0 ? (
+                        <div className="col-12">
+                            <h4 className="py-5 text-custom-muted text-center">
+                                No available times at this moment.
+                            </h4>
+                        </div>
+                    ) : (
+                        filteredAvailabilities.map((slot) => (
+                            <div
+                                className="col-md-4 mb-3"
+                                key={slot.availableTimeId + "-" + slot.workfield}
+                            >
+                                <div className="card shadow-sm h-100">
+                                    <div className="card-body d-flex flex-column">
+                                        <h5 className="card-title">{slot.freelancerName}</h5>
+                                        <h6 className="card-subtitle mb-2 text-muted">
+                                            {slot.workfield.join(", ")}
+                                        </h6>
+                                        <p className="card-text">
+                                            <strong>From:</strong>{" "}
+                                            {new Date(slot.availableFrom).toLocaleString()} <br />
+                                            <strong>To:</strong>{" "}
+                                            {new Date(slot.availableTo).toLocaleString()}
+                                        </p>
+                                        <button
+                                            className="btn btn-accent btn-sm mt-auto"
+                                            onClick={() => handleBooking(slot)}
+                                        >
+                                            Book
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    )}
                 </div>
             </div>
         </div>

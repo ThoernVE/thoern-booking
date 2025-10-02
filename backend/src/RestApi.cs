@@ -93,6 +93,36 @@ public static class RestApi
 
             return Results.Ok(new { message = "Competences updated", count = req.WorkfieldIds.Count });
         });
+
+        App.MapPost("api/bookTime", (HttpContext context, [FromBody] BookTimeRequest request) =>
+        {
+            var availableTimeSql = "SELECT * FROM availableTimes WHERE id = $id";
+            var availableTime = DbQuery.SQLQueryOne(availableTimeSql, new { id = request.AvailableTimeId }, context);
+            if (availableTime == null)
+            {
+                return Results.BadRequest(new { error = "Available time not found" });
+            }
+
+            var insertSql = @"
+                INSERT INTO bookings (customerId, freelancerId, bookedFrom, bookedTo) 
+                VALUES ($customerId, $freelancerId, $bookedFrom, $bookedTo)
+            ";
+            DbQuery.SQLQuery(insertSql, new
+            {
+                customerId = request.UserId,
+                freelancerId = availableTime.userId,
+                bookedFrom = availableTime.availableFrom,
+                bookedTo = availableTime.availableTo
+            }, context);
+
+
+            var deleteSql = "DELETE FROM AvailableTimes WHERE id = $id";
+            DbQuery.SQLQuery(deleteSql, new { id = request.AvailableTimeId }, context);
+
+            return Results.Ok(new { message = "Booking successful" });
+        });
     }
+
+    public record BookTimeRequest(int AvailableTimeId, int UserId);
     public record SaveWorkfieldsRequest(int UserId, List<int> WorkfieldIds);
 }

@@ -8,9 +8,25 @@ type EditModalProps = {
     isEdit: boolean;
 }
 
+
+function getNowForDatetimeLocal() {
+    const now = new Date();
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    const yyyy = now.getFullYear();
+    const mm = pad(now.getMonth() + 1);
+    const dd = pad(now.getDate());
+    const hh = pad(now.getHours());
+    const min = pad(now.getMinutes());
+    return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+}
+
 export function EditModal({ initialFrom, initialTo, onClose, onSave, isEdit }: EditModalProps) {
-    const [from, setFrom] = useState(initialFrom);
-    const [to, setTo] = useState(initialTo);
+    const [from, setFrom] = useState(
+        isEdit ? initialFrom : getNowForDatetimeLocal()
+    );
+    const [to, setTo] = useState(
+        isEdit ? initialTo : getNowForDatetimeLocal()
+    );
 
     return (
         <div className="modal fade show d-block" tabIndex={-1} role="dialog">

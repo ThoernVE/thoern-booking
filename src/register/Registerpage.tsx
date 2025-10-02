@@ -7,7 +7,7 @@ Registerpage.route = {
     path: '/register',
     index: 3,
     hiddenWhen: "loggedIn",
-}as Route;
+} as Route;
 
 export default function Registerpage() {
     const navigator = useNavigate();
@@ -16,7 +16,7 @@ export default function Registerpage() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [password, setPassword] = useState("");
-    const [role, setRole] = useState("");
+    const [role, setRole] = useState("freelancer");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
