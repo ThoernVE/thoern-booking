@@ -20,6 +20,8 @@ Thoern Booking is a full-stack web application for booking freelancers and manag
 - **API**: RESTful endpoints for all core features
 - **Authentication**: Session-based authentication
 - **Docker**: Multi-container setup for frontend and backend
+- **Hosting**: Selfhosted on a RaspberryPi 5 on a nginx-server
+- **CI/CD**: CI/CD automated via self-hosted runner on Github Actions
 
 ## Getting Started
 
