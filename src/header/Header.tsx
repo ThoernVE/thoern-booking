@@ -8,8 +8,6 @@ export default function Header() {
   const { user, logout } = useAuth();
   const navigator = useNavigate();
 
-  // whether the navbar is expanded or not
-  // (we use this to close it after a click/selection)
   const [expanded, setExpanded] = useState(false);
 
   async function handleLogout() {
@@ -24,12 +22,10 @@ export default function Header() {
         }
     }
 
-  //  get the current route
   const pathName = useLocation().pathname;
   const currentRoute = routes
     .slice().sort((a, b) => a.path.length > b.path.length ? -1 : 1)
     .find(x => pathName.indexOf(x.path.split(':')[0]) === 0);
-  // function that returns true if a menu item is 'active'
   const isActive = (path: string) =>
     path === currentRoute?.path || path === currentRoute?.parent;
 

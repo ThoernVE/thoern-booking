@@ -37,7 +37,7 @@ export default function AvailableTimes() {
         }
 
         fetchAvailableTimes();
-    }, []);
+    }, [userId]);
 
     const handleOpenCreate = () => {
         setEditingTime(null);
@@ -89,15 +89,17 @@ export default function AvailableTimes() {
                     throw new Error("Failed to create available time");
                 }
                 const created = await response.json();
-                setAvailableTimes((prev) => [
-                    ...prev,
-                    {
-                        id: created.insertId,
-                        userId: user?.id!,
-                        availableFrom: from,
-                        availableTo: to,
-                    },
-                ]);
+                if (userId) {
+                    setAvailableTimes((prev) => [
+                        ...prev,
+                        {
+                            id: created.insertId,
+                            userId: userId,
+                            availableFrom: from,
+                            availableTo: to,
+                        },
+                    ]);
+                }
                 setShowModal(false);
 
             } catch (error) {

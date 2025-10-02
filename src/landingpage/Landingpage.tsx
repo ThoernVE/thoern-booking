@@ -32,13 +32,13 @@ export default function LandingPage() {
           <Row className="h-100">
             <Col className="d-flex flex-column flex-md-row">
               <div className="d-flex flex-column justify-content-center align-items-center flex-fill p-5 border bg-surface-accent shadow-sm ">
-                <h3 className="mb-3">Looking for work</h3>
+                <h3 className="mb-3">Find work as a freelancer</h3>
                 <a href="/login" className="btn btn-accent btn-lg mt-3">
                   Log In
                 </a>
               </div>
               <div className="d-flex flex-column justify-content-center align-items-center flex-fill p-5 border bg-surface-accent shadow-sm ">
-                <h3 className="mb-3">Looking to hire</h3>
+                <h3 className="mb-3">Looking for freelancers to hire </h3>
                 <a href="/login" className="btn btn-accent btn-lg mt-3">
                   Browse Freelancers
                 </a>
