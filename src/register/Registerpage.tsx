@@ -69,7 +69,7 @@ export default function Registerpage() {
                                 <Form.Label>User Type</Form.Label>
                                 <Form.Select value={role} onChange={(e) => setRole(e.target.value)}>
                                     <option value="freelancer">Freelancer</option>
-                                    <option value="customer">Customer</option>
+                                    <option value="user">Customer</option>
                                 </Form.Select>
                             </Form.Group>
                             <Button variant="accent" type="submit">
